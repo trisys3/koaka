@@ -1,0 +1,35 @@
+{
+  "name": "koaka-warehouse",
+  "version": "0.0.1",
+  "description": "Storage section of Koaka components",
+  "private": true,
+  "main": "index.js",
+  "keywords": ["IOT", "Internet of Things"],
+  "homepage": "https://github.com/trisys3/koaka",
+  "bugs": "https://github.com/trisys3/koaka/issues",
+  "license": "MIT",
+  "author": {
+    "name": "Sean Moran",
+    "email": "sean_r_moran@msn.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "trisys3/koaka"
+  },
+  "dependencies": {
+    "angular": "latest",
+    "angular-animate": "latest",
+    "angular-resource": "latest",
+    "angular-new-router": "latest",
+    "angular-material": "latest",
+    
+    "angular-ui-router": "latest",
+    "angular-bootstrap-npm": "latest",
+    "angular-ui-utils": "latest",
+
+    "bootstrap": "latest"
+  },
+  "browser": {
+    "angular-bootstrap": "angular-bootstrap-npm"
+  }
+}
