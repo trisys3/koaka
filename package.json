@@ -3,34 +3,61 @@
   "version": "0.0.1",
   "description": "Website for the Koaka IOT framework",
   "private": true,
+  "keywords": ["IOT", "Internet of Things"],
+  "homepage": "https://github.com/trisys3/koaka",
+  "bugs": "https://github.com/trisys3/koaka/issues",
+  "license": "MIT",
   "main": "index.js",
+  "author": {
+    "name": "Sean Moran",
+    "email": "sean_r_moran@msn.com"
+  },
   "repository": {
     "type": "git",
     "url": "trisys3/koaka"
   },
   "dependencies": {
-    "koa": "latest"
-  },
-  "devDependencies": {
-    "gulp": "latest",
-    "gulp-eslint": "latest",
-    "gulp-webpack": "latest",
-    "gulp-stylus": "latest",
-    
     "webpack": "latest",
 
-    "karma": "latest",
-    "karma-phantomjs-launcher": "latest",
-    "karma-chrome-launcher": "latest",
-    "karma-firefox-launcher": "latest",
-    "karma-opera-launcher": "latest",
-    "karma-jasmine": "latest",
-    "karma-coverage": "latest",
+    "koa": "latest",
+    "koa-logger": "latest",
+    "koa-vhost": "latest",
+    "koa-helmet": "latest",
+    "vhost-koa": "latest",
+
+    "angular": "latest",
+    "angular-animate": "latest",
+    "angular-resource": "latest",
+    "angular-new-router": "latest",
+    "angular-material": "latest",
+    
+    "angular-ui-router": "latest",
+    "angular-bootstrap-npm": "latest",
+    "angular-ui-utils": "latest"
+  },
+  "devDependencies": {
+    "buster": "latest",
+
+    "gulp": "latest",
+    "gulp-eslint": "latest",
+    "gulp-stylus": "latest",
+    "gulp-webpack": "latest",
 
     "jasmine": "latest",
-
+    "karma": "latest",
+    "karma-jasmine": "latest",
+    "karma-chrome-launcher": "latest",
+    "karma-coverage": "latest",
+    "karma-firefox-launcher": "latest",
+    "karma-opera-launcher": "latest",
+    "karma-phantomjs-launcher": "latest",
     "protractor": "latest",
 
-    "buster": "latest"
+    "lazypipe": "latest",
+    "through2": "latest"
+  },
+  "browser": {
+    "main": "app.js",
+    "angular-bootstrap": "angular-bootstrap-npm"
   }
 }

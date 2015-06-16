@@ -1,5 +1,6 @@
-# Logs
-logs/
+# Logs (we only ignore the contents of the log directory because some
+# applications expect it to be there before they start logging)
+log/*
 *.log
 
 # Runtime data
@@ -28,6 +29,7 @@ node_modules/ # npm modules
 
 # built files, whether for development or release
 component/
+dev/
 build/
 dist/
 
