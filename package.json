@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "Website for the Koaka IOT framework",
   "private": true,
-  "keywords": ["IOT", "Internet of Things"],
+  "keywords": [
+    "IOT",
+    "Internet of Things"
+  ],
   "homepage": "https://github.com/trisys3/koaka",
   "bugs": "https://github.com/trisys3/koaka/issues",
   "license": "MIT",
@@ -18,9 +21,11 @@
   },
   "dependencies": {
     "webpack": "latest",
+    "webpack-stream": "latest",
+    "css-loader": "latest",
 
     "koa": "latest",
-    "koa-logger": "latest",
+    "koa-compressor": "latest",
     "koa-vhost": "latest",
     "koa-helmet": "latest",
     "vhost-koa": "latest",
@@ -30,7 +35,7 @@
     "angular-resource": "latest",
     "angular-new-router": "latest",
     "angular-material": "latest",
-    
+
     "angular-ui-router": "latest",
     "angular-bootstrap-npm": "latest",
     "angular-ui-utils": "latest"
@@ -41,9 +46,13 @@
     "gulp": "latest",
     "gulp-eslint": "latest",
     "gulp-stylus": "latest",
-    "gulp-webpack": "latest",
+    "gulp-htmllint": "latest",
+    "gulp-htmlmin": "latest",
+    "gulp-util": "latest",
+    "gulp-csslint": "latest",
 
     "jasmine": "latest",
+
     "karma": "latest",
     "karma-jasmine": "latest",
     "karma-chrome-launcher": "latest",
@@ -51,9 +60,12 @@
     "karma-firefox-launcher": "latest",
     "karma-opera-launcher": "latest",
     "karma-phantomjs-launcher": "latest",
+
     "protractor": "latest",
 
     "lazypipe": "latest",
+    "require-dir": "latest",
+    "yargs": "latest",
     "through2": "latest"
   },
   "browser": {
