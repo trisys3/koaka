@@ -1,7 +1,5 @@
 'use strict';
 
-module.exports = config;
-
 var config = {
   loaders: [
     {
@@ -10,3 +8,5 @@ var config = {
     }
   ]
 };
+
+module.exports = config;
