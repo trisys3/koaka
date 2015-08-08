@@ -1,0 +1,78 @@
+{
+  // EcmaScript 6
+  "ecmaFeatures": {
+    "arrowFunctions": true,
+    "binaryLiterals": true,
+    "blockBindings": true,
+    "classes": true,
+    "defaultParams": true,
+    "destructuring": true,
+    "forOf": true,
+    "generators": true,
+    "modules": true,
+    "objectLiteralComputedProperties": true,
+    "objectLiteralShorthandMethods": true,
+    "objectLiteralShorthandProperties": true,
+    "octalLiterals": true,
+    "regexUFlag": true,
+    "regexYFlag": true,
+    "restParams": true,
+    "spread": true,
+    "superInFunctions": true,
+    "templateStrings": true,
+    "unicodeCodePointEscapes": true
+  },
+  "env": {
+    "es6": true
+  },
+  "rules": {
+    // possible errors
+    "comma-dangle": [2, "always-multiline"],
+
+    // best practices
+    "dot-location": [2, "property"],
+    "no-else-return": 2,
+    "no-fallthrough": 2,
+    "no-self-compare": 2,
+    "no-void": 2,
+    "vars-on-top": 2,
+    "wrap-iife": [2, "inside"],
+    "yoda": [2, "never", {"exceptRange": true}],
+    
+    "strict": [0],
+
+    // variables
+    "no-use-before-define": [2, "nofunc"],
+
+    // style
+    "computed-property-spacing": [2, "never"],
+    "func-names": 2,
+    "indent": [2, 2, {"SwitchCase": 2}],
+    "linebreak-style": [2, "unix"],
+    "no-lonely-if": 2,
+    "no-mixed-spaces-and-tabs": [2, "smart-tabs"],
+    "no-nested-ternary": 2,
+    "no-sync": 2,
+    "no-underscore-dangle": 0,
+    "no-unneeded-ternary": 2,
+    "operator-assignment": [2, "always"],
+    "operator-linebreak": [2, "after"],
+    "padded-blocks": [2, "never"],
+    "quote-props": [2, "as-needed"],
+    "quotes": [2, "backtick", "avoid-escape"],
+    "space-after-keywords": [2, "never"],
+    "space-before-blocks": [2, "always"],
+    "space-before-function-paren": [2, "never"],
+    "space-in-parens": [2, "never"],
+    "spaced-comment": [2, "always"],
+    "wrap-regex": 2,
+
+    // ECMAScript 6
+    "constructor-super": 2,
+    "generator-star-spacing": 2,
+    "no-this-before-super": 2,
+    "no-var": 2,
+    "object-shorthand": 2,
+    "prefer-const": 2
+  }
+}
