@@ -29,6 +29,7 @@
     "koa-vhost": "latest",
     "koa-helmet": "latest",
     "vhost-koa": "latest",
+    "mime": "latest",
 
     "angular": "latest",
     "angular-animate": "latest",
@@ -67,7 +68,7 @@
     "require-dir": "latest",
     "yargs": "latest",
     "through2": "latest",
-    "event-stream": "latest"
+    "merge-stream": "latest"
   },
   "browser": {
     "main": "app.js",

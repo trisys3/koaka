@@ -1,51 +1,61 @@
+#!/usr/bin/env node
+
 'use strict';
 
-var chalk = require('chalk');
-var koa = require('koa');
-var logger = require('koa-json-logger');
-var compress = require('koa-compressor');
-var vhost = require('vhost-koa');
+const chalk = require(`chalk`);
+const koa = require(`koa`);
+const logger = require(`koa-json-logger`);
+const compress = require(`koa-compressor`);
+const vhost = require(`vhost-koa`);
+const helmet = require(`koa-helmet`);
 
-var config = require('./config/config');
-var app = require('./config/koa');
+const config = require(`./config/config`);
 
 // server & its virtual hosts
-var server = koa();
-var vhosts = koa();
+const server = koa();
+const vhosts = koa();
 
 // give the server a name
 server.name = config.name;
 
 // set the phase of development for the app
-server.env = config.env;
+server.env = config.phase;
 
 // log some general information about the application
-console.log(chalk.green('Environment: ' + config.env || 'development'));
-if(!Array.isArray(config.hosts)) {
-  config.hosts = [config.hosts];
-}
-for(let host of config.hosts) {
-  console.log(chalk.green('Hostname(s): ' + host));
-}
-console.log(chalk.green('Port: ' + config.port));
-console.log(chalk.green('Application ' + config.name + ' started at ' + new Date()));
+console.log(chalk.green(`Environment: ${config.phase}`));
+console.log(chalk.green(`Hostname(s): ${config.host}`));
+console.log(chalk.green(`Port: ${config.port}`));
+console.log(chalk.green(`Application ${config.name} started at ${new Date()}`));
 
-server.use(compress());
+// compression middleware
+vhosts.use(compress());
 
 // set up our middleware logger, which must be done before anything else
-server.use(logger({
-  name: config.name
+vhosts.use(logger({
+  name: config.name,
+  path: `logs/koa-logger`,
 }));
 
-// general middleware
-app(server);
+// add certain headers for protection
+vhosts.use(helmet());
+vhosts.use(helmet.csp(config.csp));
 
-// restrict the server to the hostnames we set
-for(let host of config.hosts){
-  vhosts.use(vhost(host, server));
-}
+const fs = require(`fs`);
+const path = require(`path`);
+
+// routing
+server.use(function *routing(next) {
+  // // get the routing file
+  // const routes = require(`./modules/server/routes`);
+
+  // yield* routes.call(this);
+  // yield next;
+});
+
+// restrict the server to the hostname we set
+server.use(vhost(config.host, vhosts));
 
 // listen on some ports
-vhosts.listen(config.port);
+server.listen(config.port);
 
-module.exports = vhosts;
+module.exports = server;

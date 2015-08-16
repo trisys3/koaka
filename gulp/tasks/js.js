@@ -1,25 +1,26 @@
 'use strict';
 
-var config = require('../config/config');
-var jsStreams = require('../streams/js');
-var patterns = require('../config/patterns').js;
+const config = require(`../config/config`);
+const jsStreams = require(`../streams/js`);
+const patterns = require(`../config/patterns`);
 
-var gulp = require('gulp');
-var es = require('event-stream');
+const gulp = require(`gulp`);
+const merge = require(`merge-stream`);
 
-var check = function() {
-  return gulp.src(patterns.check[config.check.js])
+const check = function jsCheck() {
+  return gulp.src(patterns.check.js[config.check.js])
     .pipe(jsStreams.check());
 };
 
-var build = function() {
-    return jsStreams.build()
-      .pipe(gulp.dest('app/'));
+const build = function jsBuild() {
+  return gulp.src(patterns.js.entry)
+    .pipe(jsStreams.build())
+    .pipe(gulp.dest(patterns.build[config.env]));
 };
 
-gulp.task('js', function() {
-  var tasks = [];
-  
+gulp.task(`js`, function jsTask() {
+  const tasks = [];
+
   if(config.check.js) {
     tasks.push(check());
   }
@@ -27,5 +28,5 @@ gulp.task('js', function() {
     tasks.push(build());
   }
 
-  return es.merge(tasks);
+  return merge(tasks);
 });

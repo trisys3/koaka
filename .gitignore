@@ -30,7 +30,7 @@ node_modules/
 # built files, whether for development or release
 component/
 dev/
-build/
+release/
 dist/
 
 # swap files, for vim & perhaps other editors

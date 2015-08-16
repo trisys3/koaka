@@ -6,7 +6,7 @@ const config = require(`../config/config`);
 
 const gulp = require(`gulp`);
 
-gulp.task(`build`, function() {
+gulp.task(`build`, function build() {
   return gulp.src(patterns.js.entry)
     .pipe(buildStreams.build())
     .pipe(gulp.dest(patterns.build[config.env]));
