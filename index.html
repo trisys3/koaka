@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html data-ng-csp="" data-ng-strict-di="" data-ng-app="Koaka" data-ng-controller="AppCtrl as vm">
   <head data-ng-controller="HeadCtrl as vmHead">
-    <title>{{ vmHead.title }}</title>
     <meta charset="utf-8" />
 
-    <link type="text/html" rel="import" data-ng-href="modules/{{ vmHead.module }}/app.html" />
-
-    <link type="text/css" rel="stylesheet" href="app.css" />
+    <link rel="import" data-ng-href="modules/{{ vmHead.module }}/index.html" />
   </head>
   <body data-ng-controller="MainCtrl as vm">
     <template></template>
 
-    <script type="text/javascript" src="app.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>

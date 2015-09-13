@@ -3,7 +3,7 @@
 const yargs = require(`yargs`).argv;
 
 // set node's phase of development
-exports.phase = yargs.env || process.env.NODE_ENV || 'development';
+exports.phase = yargs.env || process.env.NODE_ENV || `development`;
 let env;
 
 try {
@@ -34,12 +34,12 @@ exports.csp = {
   // only allow JavaScript code from our sites
   'script-src': ["'self'"],
   // only allow CSS styles from our sites
-  'style-src': ["'self'"],
+  'style-src': ["'self'", "blob:"],
   // only allow images from our sites and data-uri's
-  'img-src': ["'self'"],
+  'img-src': ["'self'", 'data:'],
   // only allow partial-page connections (XHR, WebSockets, etc.) from our
   // sites
-  'connect-src': ["'self'"],
+  'connect-src': ["'self'", 'ws://' + env.host + ':' + exports.port],
   // only allow fonts from our sites
   'font-src': ["'self'"],
   // do not allow Flash on our sites

@@ -1,12 +1,7 @@
 'use strict';
 
-const ETP = require(`extract-text-webpack-plugin`);
-
-const postcssImport = require(`postcss-import`);
 const autoprefixer = require(`autoprefixer-core`);
 const postcssReporter = require(`postcss-reporter`);
-
-const yargs = require(`yargs`);
 
 var config = {
   entry: {
@@ -15,8 +10,8 @@ var config = {
   output: {
     filename: `[name].js`,
     chunkFilename: `[name].js`,
+    path: `${process.cwd()}/dev/`,
   },
-  watch: yargs.argv.watch,
   module: {
     preLoaders: [
       {
@@ -27,11 +22,20 @@ var config = {
     loaders: [
       {
         test: /\.styl$/,
-        loader: ETP.extract(`css?sourceMap!stylus?sourceMap`),
+        loaders: [
+          `style`,
+          `css?sourceMap`,
+          `postcss`,
+          `stylus?sourceMap`,
+        ]
       },
       {
         test: /\.png$|\.jpg$|\.gif$/,
         loader: `url?name=[sha512:hash].[ext]`,
+      },
+      {
+        test: /\.json$/,
+        loader: `json`,
       },
     ],
     resolve: {
@@ -40,23 +44,15 @@ var config = {
   },
   postcss: function() {
     return [
-      postcssImport({
-        onImport: function(files) {
-          files.forEach(this.addDependency);
-        }.bind(this),
-      }),
       autoprefixer,
       postcssReporter({
         clearMessages: true,
       }),
     ];
   },
-  plugins: [
-    new ETP(`app.css`),
-  ],
   devtool: `sourcemap`,
-  recordsInputPath: process.cwd() + `/logs/webpack.in`,
-  recordsOutputPath: process.cwd() + `/logs/webpack.out`,
+  recordsInputPath: process.cwd() + `/logs/webpack/in.log`,
+  recordsOutputPath: process.cwd() + `/logs/webpack/out.log`,
 };
 
 module.exports = config;

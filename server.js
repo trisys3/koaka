@@ -46,27 +46,23 @@ const path = require(`path`);
 server.use(function *mimeTypes(next) {
   const mime = require(`mime`);
 
-  //const stats = fs.statSync(`dev/${this.path}`);
-  //// if the path is a folder, get its index.html file
-  //if(stats.isDirectory()) {
-  //  this.type = mime.lookup(`html`);
-  //  this.body = fs.createReadStream(`dev/${this.path}index.html`);
-  //}
-  //else {
-  //  this.type = mime.lookup(this.path);
-  //  this.body = fs.createReadStream(`dev/${this.path}`);
-  //}
+  const stats = fs.statSync(`dev/${this.path}`);
+  // if the path is a folder, get its index.html file
+  if(stats.isDirectory()) {
+    this.type = mime.lookup(`html`);
+    this.body = fs.createReadStream(`dev/${this.path}index.html`);
+  }
+  else {
+    this.type = mime.lookup(this.path);
+    this.body = fs.createReadStream(`dev/${this.path}`);
+  }
   yield next;
 });
+
+const routes = require(`./modules/server/routes`);
 
 // routing
-server.use(function *routing(next) {
-  // get the routing file
-  const routes = require(`./modules/server/routes`);
-
-  yield* routes.call(this);
-  yield next;
-});
+server.use(routes());
 
 // restrict the server to the hostname we set
 server.use(vhost(config.host, vhosts));

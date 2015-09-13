@@ -4,6 +4,9 @@ module.exports = {
   js: {
     entry: `app.js`,
   },
+  html: {
+    index: `index.html`,
+  },
   check: {
     js: {
       gulp: `gulp/**/*.js`,
