@@ -10,7 +10,7 @@ var config = {
   output: {
     filename: `[name].js`,
     chunkFilename: `[name].js`,
-    path: `${process.cwd()}/dev/`,
+    path: `${__dirname}/${process.env.NODE_ENV || `development`}/`,
   },
   module: {
     preLoaders: [
@@ -51,8 +51,8 @@ var config = {
     ];
   },
   devtool: `sourcemap`,
-  recordsInputPath: process.cwd() + `/logs/webpack/in.log`,
-  recordsOutputPath: process.cwd() + `/logs/webpack/out.log`,
+  recordsInputPath: `${process.cwd()}/logs/webpack/in.log`,
+  recordsOutputPath: `${process.cwd()}/logs/webpack/out.log`,
 };
 
 module.exports = config;

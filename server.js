@@ -2,72 +2,61 @@
 
 'use strict';
 
+// third-party components
 const chalk = require(`chalk`);
 const koa = require(`koa`);
 const logger = require(`koa-json-logger`);
 const compress = require(`koa-compressor`);
-const vhost = require(`vhost-koa`);
 const helmet = require(`koa-helmet`);
+const sockets = require(`socket.io`);
+const http = require(`http`);
+const mount = require(`koa-mount`);
 
+// first-party components
 const config = require(`./config/config`);
+const routes = require(`./routes`);
 
-// server & its virtual hosts
-const server = koa();
-const vhosts = koa();
+// our main koa & SocketIO servers
+const server = module.exports = koa();
+const io = new sockets();
+
+// configuration middleware
+server.use(function *useIo(next) {
+  this.io = io;
+
+  yield next;
+});
 
 // give the server a name
 server.name = config.name;
 
 // set the phase of development for the app
-server.env = config.phase;
+server.env = config.env;
 
 // log some general information about the application
-console.log(chalk.green(`Environment: ${config.phase}`));
+console.log(chalk.green(`Environment: ${config.env}`));
 console.log(chalk.green(`Hostname(s): ${config.host}`));
 console.log(chalk.green(`Port: ${config.port}`));
 console.log(chalk.green(`Application ${config.name} started at ${new Date()}`));
 
 // compression middleware
-vhosts.use(compress());
+server.use(compress());
 
-// set up our middleware logger, which must be done before anything else
-vhosts.use(logger({
+// our JSONAPI logger
+server.use(logger({
   name: config.name,
   path: `logs/koa-logger`,
 }));
 
 // add certain headers for protection
-vhosts.use(helmet());
-vhosts.use(helmet.csp(config.csp));
+server.use(helmet());
+server.use(helmet.csp(config.csp));
 
-const fs = require(`fs`);
-const path = require(`path`);
+server.use(mount(routes()));
 
-server.use(function *mimeTypes(next) {
-  const mime = require(`mime`);
+// create a NodeJS server with the content of our koa application
+const app = http.createServer(server.callback());
 
-  const stats = fs.statSync(`dev/${this.path}`);
-  // if the path is a folder, get its index.html file
-  if(stats.isDirectory()) {
-    this.type = mime.lookup(`html`);
-    this.body = fs.createReadStream(`dev/${this.path}index.html`);
-  }
-  else {
-    this.type = mime.lookup(this.path);
-    this.body = fs.createReadStream(`dev/${this.path}`);
-  }
-  yield next;
-});
-
-const routes = require(`./modules/server/routes`);
-
-// routing
-server.use(routes());
-
-// restrict the server to the hostname we set
-server.use(vhost(config.host, vhosts));
-
-// listen on some ports
-server.listen(config.port);
-
-module.exports = server;
+// have all server components listen
+app.listen(config.port);
+io.listen(app);

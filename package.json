@@ -28,63 +28,53 @@
     "stylus-loader": "latest",
     "postcss-loader": "latest",
     "img-loader": "latest",
-
     "postcss-reporter": "latest",
     "postcss-import": "latest",
     "autoprefixer-core": "latest",
-
     "koa": "latest",
     "koa-compressor": "latest",
     "koa-vhost": "latest",
     "koa-helmet": "latest",
     "koa-json-logger": "latest",
     "mime": "latest",
-    "koa-handlebars": "latest",
+    "handlebars": "latest",
     "koa-mount": "latest",
-
     "angular": "latest",
     "angular-animate": "latest",
     "angular-resource": "latest",
     "angular-new-router": "latest",
     "angular-material": "latest",
-
     "angular-ui-router": "latest",
     "angular-bootstrap-npm": "latest",
     "angular-ui-utils": "latest",
-
     "socket.io": "latest",
     "socket.io-client": "latest",
-
     "chalk": "latest"
   },
   "devDependencies": {
     "buster": "latest",
-
+    "co-fs": "latest",
     "gulp": "latest",
+    "gulp-csslint": "latest",
     "gulp-eslint": "latest",
-    "gulp-stylus": "latest",
     "gulp-htmllint": "latest",
     "gulp-htmlmin": "latest",
+    "gulp-stylus": "latest",
     "gulp-util": "latest",
-    "gulp-csslint": "latest",
-
     "jasmine": "latest",
-
     "karma": "latest",
-    "karma-jasmine": "latest",
     "karma-chrome-launcher": "latest",
     "karma-coverage": "latest",
     "karma-firefox-launcher": "latest",
+    "karma-jasmine": "latest",
     "karma-opera-launcher": "latest",
     "karma-phantomjs-launcher": "latest",
-
-    "protractor": "latest",
-
     "lazypipe": "latest",
+    "merge-stream": "latest",
+    "protractor": "latest",
     "require-dir": "latest",
-    "yargs": "latest",
     "through2": "latest",
-    "merge-stream": "latest"
+    "yargs": "latest"
   },
   "browser": {
     "main": "app.js",

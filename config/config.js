@@ -2,16 +2,16 @@
 
 const yargs = require(`yargs`).argv;
 
-// set node's phase of development
-exports.phase = yargs.env || process.env.NODE_ENV || `development`;
+// set node's phase of development, defaulting to "development"
+exports.env = process.env.NODE_ENV || `development`;
 let env;
 
 try {
-  env = require(`./env/${exports.phase}`);
+  env = require(`./env/${exports.env}`);
 }
 catch(e) {
   console.log(`Could not find environment file, using "development" as environment instead`);
-  exports.phase = `development`;
+  exports.env = `development`;
 
   env = require(`./env/development`);
 }
@@ -23,6 +23,7 @@ exports.host = env.host;
 // get the base port that will be added to for each run of the site
 var basePort = yargs.basePort || process.env.BASE_PORT || 3000;
 // get the offset port from the environment so each environment can have its own
+// default
 var offsetPort = env.port || 0;
 // put the base & offset ports together to come up with the final server port
 exports.port = basePort + offsetPort;
