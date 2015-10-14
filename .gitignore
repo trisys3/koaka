@@ -29,7 +29,8 @@ node_modules/
 
 # built files, whether for development or release
 component/
-dev/
+development/
+production/
 release/
 dist/
 

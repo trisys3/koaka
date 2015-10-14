@@ -53,6 +53,7 @@ var config = {
       }),
     ];
   },
+  watch: true,
   devtool: `sourcemap`,
   recordsInputPath: `${process.cwd()}/logs/webpack/in.log`,
   recordsOutputPath: `${process.cwd()}/logs/webpack/out.log`,

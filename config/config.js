@@ -1,6 +1,7 @@
 'use strict';
 
 const yargs = require(`yargs`).argv;
+const sockets = require(`socket.io`);
 
 // set node's phase of development, defaulting to "development"
 exports.env = process.env.NODE_ENV || `development`;
@@ -52,3 +53,5 @@ exports.csp = {
   // URL to send reports of violations to
   'report-uri': ['/csp-report'],
 };
+
+exports.socket = new sockets();

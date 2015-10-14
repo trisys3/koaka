@@ -8,24 +8,16 @@ const koa = require(`koa`);
 const logger = require(`koa-json-logger`);
 const compress = require(`koa-compressor`);
 const helmet = require(`koa-helmet`);
-const sockets = require(`socket.io`);
 const http = require(`http`);
 const mount = require(`koa-mount`);
 
 // first-party components
 const config = require(`./config/config`);
-const routes = require(`./routes`);
 
 // our main koa & SocketIO servers
 const server = module.exports = koa();
-const io = new sockets();
 
-// configuration middleware
-server.use(function *useIo(next) {
-  this.io = io;
-
-  yield next;
-});
+const allRoutes = require(`./routes`)(config.socket);
 
 // give the server a name
 server.name = config.name;
@@ -52,11 +44,11 @@ server.use(logger({
 server.use(helmet());
 server.use(helmet.csp(config.csp));
 
-server.use(mount(routes()));
+server.use(allRoutes);
 
 // create a NodeJS server with the content of our koa application
 const app = http.createServer(server.callback());
 
 // have all server components listen
 app.listen(config.port);
-io.listen(app);
+config.socket.listen(app);
