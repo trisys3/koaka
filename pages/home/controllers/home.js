@@ -3,29 +3,37 @@
 const serveStatic = require(`koa-static`);
 
 const webpack = require(`webpack`);
-const socket = require(`socket.io`);
+const indexHtml = require(`html-webpack-plugin`);
 const chok = require(`chokidar`);
-
-// webpack Hot Module Replacement watcher
-let hotUpdWatch;
-
-const webpackConfig = require(`../webpack.config`);
+const fs = require(`fs`);
+const merge = require(`merge`);
 
 module.exports = homePage;
 
-// compile the module with webpack
-webpack(webpackConfig, function webpackCb(err, comp) {
-  // after compilation is done, watch the hot update files
-  hotUpdWatch = chok.watch(`*.hot-update.json`, {
-    cwd: `${__dirname}/../${process.env.NODE_ENV || `development`}`,
-    //ignore hidden files
-    ignored: /^\./
-  });
-});
+function homePage(config) {
+  // webpack Hot Module Replacement watcher
+  let hotUpdWatch;
 
-// this page's data
-function homePage(socket) {
-  socket.on('connection', function(io) {
+  // add webpack properties that include the path
+  config.webpack.entry.app = `${__dirname}/../app.js`;
+  config.webpack.output.path = `${__dirname}/../${process.env.NODE_ENV || `development`}`;
+  config.webpack.plugins.push(new indexHtml({
+    template: `${__dirname}/../index.html`,
+    inject: true,
+    minify: config.webpack.minify.html,
+  }));
+
+  // compile the module with webpack
+  webpack(config.webpack, function webpackCb(err, comp) {
+    // watch all hot update files in the compilation folder
+    hotUpdWatch = chok.watch(`*.hot-update.json`, {
+      cwd: `${__dirname}/../${process.env.NODE_ENV || `development`}`,
+      //ignore hidden files
+      ignored: /^\./
+    });
+  });
+
+  config.homeSocket.on('connection', function(io) {
     // whenever a hot-update file gets created, emit a hot-update event to all
     // sockets connected to this page
     // we do this in the koa request-response cycle so we make sure sockets are

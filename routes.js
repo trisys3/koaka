@@ -2,11 +2,11 @@
 
 module.exports = findRoutes;
 
-function findRoutes(socket) {
+function findRoutes(config) {
   const path = require(`path`);
-  const home = require(`./pages/home`)(socket);
+  const home = require(`./pages/home`)(config);
   //const docs = require(`./pages/docs`);
-  
+
   return function *allRoutes(next) {
     // set the mounted path to the full URL
     const mountPath = path.normalize(this.path);

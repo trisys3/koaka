@@ -4,11 +4,11 @@ const homeCtrl = require(`./controllers/home`);
 
 module.exports = homeConfig;
 
-function homeConfig(socket) {
+function homeConfig(config) {
   // use the "home" namespace for SocketIO
-  const homeSocket = socket.of(`/home`);
+  config.homeSocket = config.socket.of(`/home`);
 
-  const controller = homeCtrl(homeSocket);
+  const controller = homeCtrl(config);
 
   function *homeRoutes(next) {
     yield controller.call(this, next);

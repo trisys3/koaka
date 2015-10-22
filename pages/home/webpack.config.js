@@ -11,8 +11,8 @@ var config = {
     app: `${__dirname}/app.js`,
   },
   output: {
-    filename: `[name].js`,
-    chunkFilename: `[name].js`,
+    filename: `[name].[hash].js`,
+    chunkFilename: `[name].[hash].[chunkhash].js`,
     path: `${__dirname}/${process.env.NODE_ENV || `development`}/`,
   },
   module: {
@@ -42,7 +42,7 @@ var config = {
       },
     ],
     resolve: {
-      extensions: [``, `.js`, `.styl`],
+      extensions: [``, `.coffee`, `.js`, `.json`, `.styl`],
     },
   },
   postcss: function() {
@@ -54,7 +54,7 @@ var config = {
     ];
   },
   watch: true,
-  devtool: `sourcemap`,
+  devtool: `source-map`,
   recordsInputPath: `${process.cwd()}/logs/webpack/in.log`,
   recordsOutputPath: `${process.cwd()}/logs/webpack/out.log`,
   plugins: [

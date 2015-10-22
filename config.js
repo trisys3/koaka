@@ -29,6 +29,9 @@ var offsetPort = env.port || 0;
 // put the base & offset ports together to come up with the final server port
 exports.port = basePort + offsetPort;
 
+// get the webpack configuration
+exports.webpack = require(`./webpack.config`);
+
 // Content-Security-Policy configuration
 exports.csp = {
   // by default only allow connections from our sites

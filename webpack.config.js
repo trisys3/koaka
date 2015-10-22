@@ -1,16 +1,62 @@
 'use strict';
 
+const webpack = require(`webpack`);
+
 const autoprefixer = require(`autoprefixer-core`);
 const postcssReporter = require(`postcss-reporter`);
+const HMR = webpack.HotModuleReplacementPlugin;
+
+// linting options
+exports.lint = {
+  js: {
+
+  },
+  css: {
+
+  },
+  html: {
+    'href-style': true,
+  },
+};
+
+// minification options
+exports.minify = {};
+exports.minify.urls = {
+  ignore_www: true,
+},
+exports.minify.js = {
+  
+};
+exports.minify.css = {
+  
+};
+exports.minify.html = {
+  removeComments: true,
+  removeCommentsFromCDATA: true,
+  removeCDATASectionsFromCDATA: true,
+  collapseWhitespace: true,
+  conservativeCollapse: true,
+  collapseBooleanAttributes: true,
+  removeAttributeQuotes: true,
+  removeRedundantAttributes: true,
+  useShortDoctype: true,
+  removeEmptyAttributes: true,
+  removeScriptTypeAttributes: true,
+  removeStyleLinkTypeAttributes: true,
+  removeOptionalTags: true,
+  // lint: lint.html,
+  minifyJS: exports.minify.js,
+  minifyCSS: exports.minify.css,
+  minifyURLs: exports.minify.urls
+};
 
 var config = {
   entry: {
-    app: `./app.js`,
+    app: `${__dirname}/app.js`,
   },
   output: {
-    filename: `[name].js`,
-    chunkFilename: `[name].js`,
-    path: `${__dirname}/${process.env.NODE_ENV || `development`}/`,
+    filename: `[name].[hash].js`,
+    chunkFilename: `[name].[hash].[chunkhash].js`,
   },
   module: {
     preLoaders: [
@@ -39,7 +85,7 @@ var config = {
       },
     ],
     resolve: {
-      extensions: [``, `.js`, `.styl`],
+      extensions: [``, `.js`, `.json`, `.styl`],
     },
   },
   postcss: function() {
@@ -50,9 +96,11 @@ var config = {
       }),
     ];
   },
-  devtool: `sourcemap`,
-  recordsInputPath: `${process.cwd()}/logs/webpack/in.log`,
-  recordsOutputPath: `${process.cwd()}/logs/webpack/out.log`,
+  watch: true,
+  devtool: `source-map`,
+  plugins: [
+    new HMR(),
+  ],
 };
 
-module.exports = config;
+Object.assign(exports, config);

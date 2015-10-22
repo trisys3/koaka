@@ -12,12 +12,13 @@ const http = require(`http`);
 const mount = require(`koa-mount`);
 
 // first-party components
-const config = require(`./config/config`);
+const config = require(`./config`);
 
 // our main koa & SocketIO servers
 const server = module.exports = koa();
 
-const allRoutes = require(`./routes`)(config.socket);
+// get the routes
+const allRoutes = require(`./routes`)(config);
 
 // give the server a name
 server.name = config.name;

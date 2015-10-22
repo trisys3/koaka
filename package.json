@@ -15,6 +15,9 @@
     "name": "Sean Moran",
     "email": "sean_r_moran@msn.com"
   },
+  "scripts": {
+    "start": "node server.js"
+  },
   "repository": {
     "type": "git",
     "url": "trisys3/koaka"
@@ -39,6 +42,7 @@
     "mime": "latest",
     "handlebars": "latest",
     "koa-mount": "latest",
+    "koa-static": "latest",
     "angular": "latest",
     "angular-animate": "latest",
     "angular-resource": "latest",
@@ -49,6 +53,7 @@
     "angular-ui-utils": "latest",
     "socket.io": "latest",
     "socket.io-client": "latest",
+    "html-webpack-plugin": "latest",
     "chalk": "latest"
   },
   "devDependencies": {
