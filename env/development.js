@@ -6,5 +6,5 @@
 var yargs = require(`yargs`).argv;
 
 // general extra settings for this environment
-exports.host = yargs.devHost || process.env.DEV_HOST || `dev.koaka.io`;
+exports.host = yargs.devHost || process.env.DEV_HOST || `smoran.koaka.dev`;
 exports.port = yargs.devOffsetPort || process.env.DEV_OFFSET_PORT;

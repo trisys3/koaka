@@ -54,18 +54,12 @@
     "socket.io": "latest",
     "socket.io-client": "latest",
     "html-webpack-plugin": "latest",
-    "chalk": "latest"
+    "chalk": "latest",
+    "co-fs": "latest",
+    "cheerio": "latest"
   },
   "devDependencies": {
     "buster": "latest",
-    "co-fs": "latest",
-    "gulp": "latest",
-    "gulp-csslint": "latest",
-    "gulp-eslint": "latest",
-    "gulp-htmllint": "latest",
-    "gulp-htmlmin": "latest",
-    "gulp-stylus": "latest",
-    "gulp-util": "latest",
     "jasmine": "latest",
     "karma": "latest",
     "karma-chrome-launcher": "latest",
@@ -74,11 +68,7 @@
     "karma-jasmine": "latest",
     "karma-opera-launcher": "latest",
     "karma-phantomjs-launcher": "latest",
-    "lazypipe": "latest",
-    "merge-stream": "latest",
     "protractor": "latest",
-    "require-dir": "latest",
-    "through2": "latest",
     "yargs": "latest"
   },
   "browser": {

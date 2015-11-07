@@ -5,7 +5,7 @@ module.exports = findRoutes;
 function findRoutes(config) {
   const path = require(`path`);
   const home = require(`./pages/home`)(config);
-  //const docs = require(`./pages/docs`);
+  //const docs = require(`./pages/docs`)(config);
 
   return function *allRoutes(next) {
     // set the mounted path to the full URL

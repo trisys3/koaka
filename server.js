@@ -9,7 +9,6 @@ const logger = require(`koa-json-logger`);
 const compress = require(`koa-compressor`);
 const helmet = require(`koa-helmet`);
 const http = require(`http`);
-const mount = require(`koa-mount`);
 
 // first-party components
 const config = require(`./config`);
