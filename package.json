@@ -24,9 +24,9 @@
   },
   "dependencies": {
     "webpack": "latest",
-    "webpack-stream": "latest",
     "css-loader": "latest",
     "url-loader": "latest",
+    "file-loader": "latest",
     "style-loader": "latest",
     "stylus-loader": "latest",
     "postcss-loader": "latest",
@@ -36,43 +36,26 @@
     "autoprefixer-core": "latest",
     "koa": "latest",
     "koa-compressor": "latest",
-    "koa-vhost": "latest",
     "koa-helmet": "latest",
     "koa-json-logger": "latest",
-    "mime": "latest",
     "handlebars": "latest",
-    "koa-mount": "latest",
-    "koa-static": "latest",
-    "angular": "latest",
-    "angular-animate": "latest",
-    "angular-resource": "latest",
-    "angular-new-router": "latest",
-    "angular-material": "latest",
-    "angular-ui-router": "latest",
-    "angular-bootstrap-npm": "latest",
-    "angular-ui-utils": "latest",
+    "chokidar": "latest",
     "socket.io": "latest",
     "socket.io-client": "latest",
     "html-webpack-plugin": "latest",
     "chalk": "latest",
-    "co-fs": "latest",
-    "cheerio": "latest"
+    "pouchdb": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "levelup": "latest",
+    "leveldown": "latest",
+    "yargs": "latest",
+    "mime": "latest"
   },
   "devDependencies": {
-    "buster": "latest",
-    "jasmine": "latest",
-    "karma": "latest",
-    "karma-chrome-launcher": "latest",
-    "karma-coverage": "latest",
-    "karma-firefox-launcher": "latest",
-    "karma-jasmine": "latest",
-    "karma-opera-launcher": "latest",
-    "karma-phantomjs-launcher": "latest",
-    "protractor": "latest",
-    "yargs": "latest"
+    "jasmine": "latest"
   },
   "browser": {
-    "main": "app.js",
-    "angular-bootstrap": "angular-bootstrap-npm"
+    "main": "app.js"
   }
 }
