@@ -7,21 +7,31 @@ function findRoutes(config) {
   const home = require(`./pages/home`)(config);
   //const docs = require(`./pages/docs`)(config);
 
-  return function *allRoutes(next) {
-    // set the mounted path to the full URL
-    const mountPath = path.normalize(this.path);
+  return (ctx, next) => {
+    // store the full URL so we can use it when koa unwinds
+    const fullUrl = path.normalize(ctx.url);
+    let subApp;
 
     // use the docs module
-    if(mountPath.startsWith(`/docs`)) {
-      // set the mount path first
-      this.mountPath = mountPath.replace(/^\/docs/, `/`);
-      //yield* docs();
+    if(fullUrl.startsWith(`/docs`)) {
+      // subApp = docs;
+      // ctx.url = fullUrl.replace(/^\/docs/, `/`);
+    }
+    // use the home module
+    else if(fullUrl.startsWith(`/home`)) {
+      subApp = home;
+      ctx.url = fullUrl.replace(/^\/home/, `/`);
+    }
+    // use the root path
+    else {
+      subApp = root;
+      // do not change the URL because it is already what we want
     }
 
-    // use the home module
-    else {
-      // do not set the mount path, as it is the same anyway
-      yield home.call(this, next);
-    }
+    return subApp(ctx, next)
+      .then(() => {
+        // restore the full path for the unwinding
+        ctx.url = fullUrl;
+      });
   };
 }

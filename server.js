@@ -4,17 +4,18 @@
 
 // third-party components
 const chalk = require(`chalk`);
-const koa = require(`koa`);
+const Koa = require(`koa`);
 const logger = require(`koa-json-logger`);
 const compress = require(`koa-compressor`);
 const helmet = require(`koa-helmet`);
 const http = require(`http`);
+const convert = require(`koa-convert`);
 
 // first-party components
 const config = require(`./config`);
 
 // our main koa & SocketIO servers
-const server = module.exports = koa();
+const server = module.exports = new Koa();
 
 // get the routes
 const allRoutes = require(`./routes`)(config);
@@ -32,17 +33,17 @@ console.log(chalk.green(`Port: ${config.port}`));
 console.log(chalk.green(`Application ${config.name} started at ${new Date()}`));
 
 // compression middleware
-server.use(compress());
+server.use(convert(compress()));
 
 // our JSONAPI logger
-server.use(logger({
+server.use(convert(logger({
   name: config.name,
   path: `logs/koa-logger`,
-}));
+})));
 
 // add certain headers for protection
-server.use(helmet());
-server.use(helmet.csp(config.csp));
+server.use(convert(helmet()));
+server.use(convert(helmet.csp(config.csp)));
 
 server.use(allRoutes);
 
