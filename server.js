@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 'use strict';
 
 // third-party components
@@ -29,7 +27,7 @@ server.env = config.env;
 // log some general information about the application
 console.log(chalk.green(`Environment: ${config.env}`));
 console.log(chalk.green(`Hostname(s): ${config.host}`));
-console.log(chalk.green(`Port: ${config.port}`));
+console.log(chalk.green(`Port: ${config.serverPort}`));
 console.log(chalk.green(`Application ${config.name} started at ${new Date()}`));
 
 // compression middleware
@@ -51,5 +49,5 @@ server.use(allRoutes);
 const app = http.createServer(server.callback());
 
 // have all server components listen
-app.listen(config.port);
+app.listen(config.serverPort);
 config.socket.listen(app);

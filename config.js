@@ -22,15 +22,24 @@ exports.name = `Koaka`;
 exports.host = env.host;
 
 // get the base port that will be added to for each run of the site
-var basePort = yargs.basePort || process.env.BASE_PORT || 3000;
+var basePort = yargs.port || process.env.PORT || 3000;
+
+// get the base port for the client
+// TODO: find a way to get this without hard-coding it, preferably without going
+// through the VirtualBox/Vagrant/Docker API, ideally being able to change it
+// while the server is running
+var clientBasePort = yargs.clientPort || process.env.CLIENT_PORT || 30000;
+
 // get the offset port from the environment so each environment can have its own
 // default
-var offsetPort = env.port || 0;
+var offsetPort = env.offsetPort || process.env.OFFSET_PORT || 0;
+
 // put the base & offset ports together to come up with the final server port
-exports.port = basePort + offsetPort;
+var serverPort = exports.serverPort = basePort + offsetPort;
+var clientPort = exports.clientPort = clientBasePort + offsetPort;
 
 // get the webpack configuration
-exports.webpack = require(`./webpack.config`);
+exports.webpack = require(`./webpack.client.config`);
 
 // Content-Security-Policy configuration
 exports.csp = {
@@ -44,7 +53,7 @@ exports.csp = {
   'img-src': ["'self'", 'data:'],
   // only allow partial-page connections (XHR, WebSockets, etc.) from our
   // sites
-  'connect-src': ["'self'", 'ws://' + env.host + ':' + exports.port],
+  'connect-src': ["'self'", 'ws://' + env.host + ':' + clientPort],
   // only allow fonts from our sites
   'font-src': ["'self'"],
   // do not allow Flash on our sites

@@ -1,7 +1,5 @@
 'use strict';
 
-const serveStatic = require(`koa-static`);
-
 const webpack = require(`webpack`);
 const indexHtml = require(`html-webpack-plugin`);
 const chok = require(`chokidar`);
@@ -33,8 +31,8 @@ function homePage(config) {
     config.socket.on('connection', function(io) {
       // whenever a hot-update file gets created, emit a hot-update event to all
       // sockets connected to this page
-      // we do this in the koa request-response cycle so we make sure sockets are
-      // listening first
+      // we do this in the koa request-response cycle so we make sure sockets
+      // are listening first
       hotUpdWatch.on(`add`, function(path) {
         io.emit(`hot-update`);
       });
@@ -55,6 +53,5 @@ function homePage(config) {
     }
 
     return next();
-    // return serveStatic(`${__dirname}/${config.env}`, {defer: true});
   };
 }

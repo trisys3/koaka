@@ -2,7 +2,7 @@
 
 const webpack = require(`webpack`);
 
-const autoprefixer = require(`autoprefixer-core`);
+const autoprefixer = require(`autoprefixer`);
 const postcssReporter = require(`postcss-reporter`);
 const HMR = webpack.HotModuleReplacementPlugin;
 
@@ -73,7 +73,7 @@ var config = {
           `css?sourceMap`,
           `postcss`,
           `stylus?sourceMap`,
-        ]
+        ],
       },
       {
         test: /\.png$|\.jpg$|\.gif$/,

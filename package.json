@@ -33,7 +33,7 @@
     "img-loader": "latest",
     "postcss-reporter": "latest",
     "postcss-import": "latest",
-    "autoprefixer-core": "latest",
+    "autoprefixer": "latest",
     "koa": "latest",
     "koa-compressor": "latest",
     "koa-helmet": "latest",

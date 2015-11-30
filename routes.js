@@ -5,7 +5,8 @@ module.exports = findRoutes;
 function findRoutes(config) {
   const path = require(`path`);
   const home = require(`./pages/home`)(config);
-  //const docs = require(`./pages/docs`)(config);
+  // const root = require(`./pages/root`)(config);
+  // const docs = require(`./pages/docs`)(config);
 
   return (ctx, next) => {
     // store the full URL so we can use it when koa unwinds
@@ -24,7 +25,7 @@ function findRoutes(config) {
     }
     // use the root path
     else {
-      subApp = root;
+      // subApp = root;
       // do not change the URL because it is already what we want
     }
 
