@@ -43,6 +43,7 @@
     "socket.io": "latest",
     "socket.io-client": "latest",
     "html-webpack-plugin": "latest",
+    "html-loader": "latest",
     "chalk": "latest",
     "pouchdb": "latest",
     "react": "latest",

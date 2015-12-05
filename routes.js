@@ -4,8 +4,8 @@ module.exports = findRoutes;
 
 function findRoutes(config) {
   const path = require(`path`);
-  const home = require(`./pages/home`)(config);
-  // const root = require(`./pages/root`)(config);
+  const root = require(`./server/`)(config);
+  // const home = require(`./pages/home`)(config);
   // const docs = require(`./pages/docs`)(config);
 
   return (ctx, next) => {
@@ -20,12 +20,12 @@ function findRoutes(config) {
     }
     // use the home module
     else if(fullUrl.startsWith(`/home`)) {
-      subApp = home;
-      ctx.url = fullUrl.replace(/^\/home/, `/`);
+      // subApp = home;
+      // ctx.url = fullUrl.replace(/^\/home/, `/`);
     }
     // use the root path
     else {
-      // subApp = root;
+      subApp = root;
       // do not change the URL because it is already what we want
     }
 

@@ -7,7 +7,7 @@ const postcssReporter = require(`postcss-reporter`);
 const HMR = webpack.HotModuleReplacementPlugin;
 
 // linting options
-exports.lint = {
+var lint = exports.lint = {
   js: {
 
   },
@@ -20,17 +20,17 @@ exports.lint = {
 };
 
 // minification options
-exports.minify = {};
-exports.minify.urls = {
+var minify = {};
+minify.urls = {
   ignore_www: true,
 },
-exports.minify.js = {
+minify.js = {
   
 };
-exports.minify.css = {
+minify.css = {
   
 };
-exports.minify.html = {
+minify.html = {
   removeComments: true,
   removeCommentsFromCDATA: true,
   removeCDATASectionsFromCDATA: true,
@@ -45,10 +45,12 @@ exports.minify.html = {
   removeStyleLinkTypeAttributes: true,
   removeOptionalTags: true,
   // lint: lint.html,
-  minifyJS: exports.minify.js,
-  minifyCSS: exports.minify.css,
-  minifyURLs: exports.minify.urls
+  minifyJS: minify.js,
+  minifyCSS: minify.css,
+  minifyURLs: minify.urls
 };
+
+exports.minify = minify;
 
 var config = {
   entry: {
@@ -62,7 +64,10 @@ var config = {
     preLoaders: [
       {
         test: /\.png$|\.jpg$|\.gif$/,
-        loader: `img?minimize`,
+        loader: `img`,
+        query: {
+          minimize: true,
+        },
       },
     ],
     loaders: [
@@ -77,11 +82,21 @@ var config = {
       },
       {
         test: /\.png$|\.jpg$|\.gif$/,
-        loader: `url?name=[sha512:hash].[ext]`,
+        loader: `url`,
+        query: {
+          name: `[sha512:hash].[ext]`,
+        },
       },
       {
         test: /\.json$/,
         loader: `json`,
+      },
+      {
+        test: /\.html$/,
+        loader: `html`,
+        query: {
+          minimize: lint.html
+        },
       },
     ],
     resolve: {
