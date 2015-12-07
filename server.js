@@ -41,7 +41,7 @@ server.use(convert(logger({
 
 // add certain headers for protection
 server.use(convert(helmet()));
-// server.use(convert(helmet.csp(config.csp)));
+server.use(convert(helmet.csp(config.csp)));
 
 server.use(allRoutes);
 
