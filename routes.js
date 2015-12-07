@@ -4,7 +4,7 @@ module.exports = findRoutes;
 
 function findRoutes(config) {
   const path = require(`path`);
-  const root = require(`./server/`)(config);
+  const root = require(`./backend/`)(config);
   // const home = require(`./pages/home`)(config);
   // const docs = require(`./pages/docs`)(config);
 
