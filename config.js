@@ -1,11 +1,36 @@
 'use strict';
 
 let yargs = require(`yargs`);
+const stripJsonComments = require(`strip-json-comments`);
 const Sockets = require(`socket.io`);
+const fs = require(`fs`);
 
-// global argument configuration, that all other configuration depends on
+// global argument configuration
 yargs = yargs
   .env()
+  .options({
+    config: {
+      config: true,
+      configParser: configPath => {
+        try {
+          return JSON.parse(stripJsonComments(fs.readFileSync(configPath, `utf8`)));
+        }
+        catch(e) {
+          // the file probably just does not exist, which is perfectly fine
+          // for us, so we'll just pass an empty object
+          return {};
+        }
+      },
+      description: `Path to a file with all default configuration options. Defaults to ".koakarc", in the style of common Linux & node utilities' configuration file paths. Comments are stripped out.`,
+      default: `.koakarc`,
+    },
+  });
+
+console.log(yargs.argv.hostname);
+
+// global argument options, that depend on nothing but the global argument
+// configuration but that aother arguments may depend on
+yargs = yargs
   .options({
     env: {
       type: `string`,
