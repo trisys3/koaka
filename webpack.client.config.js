@@ -7,7 +7,7 @@ const postcssReporter = require(`postcss-reporter`);
 const HMR = webpack.HotModuleReplacementPlugin;
 
 // linting options
-var lint = exports.lint = {
+const lint = exports.lint = {
   js: {
 
   },
@@ -20,15 +20,18 @@ var lint = exports.lint = {
 };
 
 // minification options
-var minify = {};
+const minify = {};
+
 minify.urls = {
+  // this option from the library has an underscore
+  /* eslint camelcase: 0 */
   ignore_www: true,
-},
+};
 minify.js = {
-  
+
 };
 minify.css = {
-  
+
 };
 minify.html = {
   removeComments: true,
@@ -47,12 +50,12 @@ minify.html = {
   // lint: lint.html,
   minifyJS: minify.js,
   minifyCSS: minify.css,
-  minifyURLs: minify.urls
+  minifyURLs: minify.urls,
 };
 
 exports.minify = minify;
 
-var config = {
+const config = {
   entry: {
     app: `${__dirname}/app.js`,
   },
@@ -95,7 +98,7 @@ var config = {
         test: /\.html$/,
         loader: `html`,
         query: {
-          minimize: lint.html
+          minimize: lint.html,
         },
       },
     ],
@@ -103,7 +106,7 @@ var config = {
       extensions: [``, `.js`, `.json`, `.styl`],
     },
   },
-  postcss: function() {
+  postcss() {
     return [
       autoprefixer,
       postcssReporter({

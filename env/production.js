@@ -3,8 +3,14 @@
 /* Production Environment
  * Environment for testing production-level code before it goes live */
 
-var yargs = require('yargs').argv;
+const yargs = require(`yargs`)
+  .env();
+const argv = yargs.argv;
 
-// general extra settings for this environment
-exports.host = yargs.prodHost || process.env.PROD_HOST || 'koaka.io';
-exports.port = yargs.prodOffsetPort || process.env.PROD_OFFSET_PORT;
+const host = argv.prodHost || argv.host || `koaka.io`;
+
+const mainPort = argv.prodPort || argv.port || 4000;
+const offsetPort = argv.prodOffsetPort || argv.offsetPort || 0;
+
+exports.host = host;
+exports.port = mainPort + offsetPort;

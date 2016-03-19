@@ -1,7 +1,5 @@
 'use strict';
 
-const webpack = require(`webpack`);
-
 // linting options
 exports.lint = {
   js: {
@@ -13,12 +11,12 @@ exports.lint = {
 exports.minify = {};
 exports.minify.urls = {
   ignore_www: true,
-},
+};
 exports.minify.js = {
-  
+
 };
 
-var config = {
+const config = {
   entry: {
     index: `${__dirname}/server.js`,
   },

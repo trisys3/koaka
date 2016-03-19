@@ -3,8 +3,14 @@
 /* Development Environment
  * Specifically crafted for ease of development */
 
-var yargs = require(`yargs`).argv;
+const yargs = require(`yargs`)
+  .env();
+const argv = yargs.argv;
 
-// general extra settings for this environment
-exports.host = yargs.devHost || process.env.DEV_HOST || `smoran.koaka.dev`;
-exports.port = yargs.devOffsetPort || process.env.DEV_OFFSET_PORT;
+const host = argv.devHost || argv.host || `koaka.dev`;
+
+const mainPort = argv.devPort || argv.port || 3000;
+const offsetPort = argv.devOffsetPort || argv.offsetPort || 0;
+
+exports.port = mainPort + offsetPort;
+exports.host = host;
