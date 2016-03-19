@@ -1,43 +1,84 @@
 'use strict';
 
-const yargs = require(`yargs`).argv;
+let yargs = require(`yargs`);
 const Sockets = require(`socket.io`);
 
-// set node's phase of development, defaulting to "development"
-exports.env = process.env.NODE_ENV || `development`;
-let env;
+// global argument configuration, that all other configuration depends on
+yargs = yargs
+  .env()
+  .options({
+    env: {
+      type: `string`,
+      description: `Server's phase of development`,
+      default: process.env.NODE_ENV || `development`,
+    },
+  });
 
-try {
-  env = require(`./env/${exports.env}`);
-}
-catch(e) {
-  console.log(`Could not find environment file, using "development" as environment instead`);
-  exports.env = `development`;
+// 1st-level arguments, that rely on nothing but maybe global constants
+yargs = yargs
+  .options({
+    name: {
+      type: `string`,
+      description: `Name of the server`,
+      default: `Koaka`,
+    },
+    hostname: {
+      type: `string`,
+      description: `Hostname the server uses.`,
+      default: `koaka.io`,
+    },
+    basePort: {
+      type: `number`,
+      alias: `bp`,
+      description: `Base port for the web server, defaulting to the NodeJS default of 3000.`,
+      default: 3000,
+    },
+    offsetPort: {
+      type: `number`,
+      alias: `op`,
+      description: `Offset port for the webserver. Defaults to having no offset, meaning the server just uses the base port.`,
+      default: 0,
+    },
+    clientOffsetPort: {
+      type: `number`,
+      alias: `cop`,
+      description: `Offset port for the port the test client is using to connect from the Vagrant or Docker virtual machine to the server, defaulting to no offset.`,
+      default: 0,
+    },
+  });
 
-  env = require(`./env/development`);
-}
+// 2nd-level configuration, that depends on the 1st-level configuration
+yargs = yargs
+  .options({
+    port: {
+      type: `number`,
+      alias: `p`,
+      description: `Set the port explicitly, rather than adding the main & offset ports.`,
+      default: yargs.argv.basePort + yargs.argv.offsetPort,
+    },
+    clientBasePort: {
+      type: `number`,
+      alias: `cbp`,
+      description: `Base port for the port the test client is using to connect from the Vagrant or Docker virtual machine to the server, defaulting to the server port.
+        NOTE: In the future, this will be gotten from the API of VirtualBox, Docker, or whatever virtual machine system is specified, so it will not usually need to be set explicitly.`,
+      default: yargs.argv.basePort,
+    },
+  });
+
+// 3rd-level argument configuration, usually we will not need to go past this
+yargs = yargs
+  .options({
+    clientPort: {
+      type: `number`,
+      alias: `cp`,
+      description: `Set the port explicitly, rather than adding the main & offset ports.`,
+      default: yargs.argv.clientBasePort + yargs.argv.clientOffsetPort,
+    },
+  });
+
+Object.assign(exports, yargs.argv);
 
 // basic application information
-exports.name = `Koaka`;
-exports.host = env.host;
-
-// get the base port that will be added to for each run of the site
-const basePort = yargs.port || process.env.PORT || 3000;
-
-// get the base port for the client
-// TODO: find a way to get this without hard-coding it, preferably without going
-// through the VirtualBox/Vagrant/Docker API, ideally being able to change it
-// while the server is running
-const clientBasePort = yargs.clientPort || process.env.CLIENT_PORT || 30000;
-
-// get the offset port from the environment so each environment can have its own
-// default
-const offsetPort = env.offsetPort || process.env.OFFSET_PORT || 0;
-
-// put the base & offset ports together to come up with the final server port
-exports.serverPort = basePort + offsetPort;
-const clientPort = exports.clientPort = clientBasePort + offsetPort;
-
 // get the webpack configuration
 exports.webpack = require(`./webpack.client.config`);
 
@@ -53,7 +94,7 @@ exports.csp = {
   'img-src': [`'self'`, `data:`],
   // only allow partial-page connections (XHR, WebSockets, etc.) from our
   // sites
-  'connect-src': [`'self'`, `ws://${env.host}:${clientPort}`],
+  'connect-src': [`'self'`, `ws://${yargs.argv.hostname}:${yargs.argv.clientPort}`],
   // only allow fonts from our sites
   'font-src': [`'self'`],
   // do not allow Flash on our sites
