@@ -10,6 +10,7 @@ exports.lint = {
 // minification options
 exports.minify = {};
 exports.minify.urls = {
+  /* eslint "camelcase": "off" */
   ignore_www: true,
 };
 exports.minify.js = {

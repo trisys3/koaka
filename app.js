@@ -1,6 +1,6 @@
 require('./app.styl');
 const io = require('socket.io-client');
-const socket = io('http://dev.koaka.io:3000')
+const socket = io('http://dev.koaka.io:3000');
 
 require.ensure('./angular', () => {
   console.log(`Angular is required`);
