@@ -15,9 +15,6 @@
     "name": "Sean Moran",
     "email": "sean_r_moran@msn.com"
   },
-  "scripts": {
-    "start": "node server.js"
-  },
   "repository": {
     "type": "git",
     "url": "trisys3/koaka"
@@ -34,7 +31,8 @@
     "postcss-reporter": "latest",
     "postcss-import": "latest",
     "autoprefixer": "latest",
-    "koa": "latest",
+    "koa": "next",
+    "koa-convert": "latest",
     "koa-compressor": "latest",
     "koa-helmet": "latest",
     "koa-json-logger": "latest",
@@ -54,6 +52,24 @@
     "mime": "latest"
   },
   "devDependencies": {
+    "babel-cli": "latest",
+    "babel-core": "^6.7.4",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-syntax-trailing-function-commas": "^6.5.0",
+    "babel-plugin-transform-class-constructor-call": "^6.6.5",
+    "babel-plugin-transform-class-properties": "^6.6.0",
+    "babel-plugin-transform-do-expressions": "^6.5.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.7.4",
+    "babel-plugin-transform-es2015-sticky-regex": "^6.5.0",
+    "babel-plugin-transform-es2015-template-literals": "^6.6.5",
+    "babel-plugin-transform-exponentiation-operator": "^6.5.0",
+    "babel-plugin-transform-export-extensions": "^6.5.0",
+    "babel-plugin-transform-function-bind": "^6.5.2",
+    "babel-plugin-transform-object-rest-spread": "^6.6.5",
+    "babel-plugin-transform-react-constant-elements": "^6.5.0",
+    "babel-plugin-transform-react-jsx": "^6.7.4",
+    "babel-plugin-transform-runtime": "^6.6.0",
+    "babel-runtime": "^6.6.1",
     "jasmine": "latest"
   },
   "browser": {

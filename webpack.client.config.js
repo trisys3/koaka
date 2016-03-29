@@ -75,6 +75,14 @@ const config = {
     ],
     loaders: [
       {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: `babel`,
+        query: {
+          cacheDirectory: true,
+        },
+      },
+      {
         test: /\.styl$/,
         loaders: [
           `style`,

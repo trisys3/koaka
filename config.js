@@ -26,8 +26,6 @@ yargs = yargs
     },
   });
 
-console.log(yargs.argv.hostname);
-
 // global argument options, that depend on nothing but the global argument
 // configuration but that aother arguments may depend on
 yargs = yargs

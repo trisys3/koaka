@@ -1,11 +1,8 @@
 'use strict';
 
-// linting options
-exports.lint = {
-  js: {
-
-  },
-};
+// const fs = require(`fs`);
+const pkg = require(`${process.cwd()}/package.json`);
+const webpack = require(`webpack`);
 
 // minification options
 exports.minify = {};
@@ -17,6 +14,12 @@ exports.minify.js = {
 
 };
 
+const nodeModules = {};
+
+for(const dep in pkg.dependencies) {
+  nodeModules[dep] = `commonjs ${dep}`;
+}
+
 const config = {
   entry: {
     index: `${__dirname}/server.js`,
@@ -24,9 +27,18 @@ const config = {
   output: {
     filename: `[name].[hash].js`,
     chunkFilename: `[name].[hash].[chunkhash].js`,
+    path: `${process.cwd()}/dist`,
   },
   module: {
     loaders: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: `babel`,
+        query: {
+          cacheDirectory: true,
+        },
+      },
       {
         test: /\.json$/,
         loader: `json`,
@@ -41,6 +53,14 @@ const config = {
     },
   },
   target: `node`,
+  externals: nodeModules,
+  plugins: [
+    new webpack.BannerPlugin(`require('source-map-support').install();`,
+      {
+        raw: true,
+        entryOnly: false,
+      }),
+  ],
   node: {
     global: false,
     process: false,

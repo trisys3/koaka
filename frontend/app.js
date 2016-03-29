@@ -1,8 +1,8 @@
 // connect to the home SocketIO namespace
-const io = require('socket.io-client');
+import io from 'socket.io-client';
 const socket = io(`${document.location.origin}`);
 
-require('./app.styl');
+import './app.styl';
 
 if(module.hot) {
   module.hot.accept();

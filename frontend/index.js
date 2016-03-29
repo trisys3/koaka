@@ -8,10 +8,10 @@ module.exports = homePage;
 
 function homePage(config) {
   // add webpack properties that include the path
-  config.webpack.entry.app = `${__dirname}/app.js`;
-  config.webpack.output.path = `${__dirname}/${config.env}`;
+  config.webpack.entry.app = `${process.cwd()}/frontend/app.js`;
+  config.webpack.output.path = `${process.cwd()}/frontend/${config.env}`;
   config.webpack.plugins.push(new IndexHtml({
-    template: `${__dirname}/index.html`,
+    template: `${process.cwd()}/frontend/index.html`,
     inject: true,
     minify: config.webpack.minify.html,
   }));
@@ -20,7 +20,7 @@ function homePage(config) {
   webpack(config.webpack, () => {
     // watch all hot update files in the compilation folder
     const hotUpdWatch = chok.watch(`*.hot-update.json`, {
-      cwd: `${__dirname}/${config.env}`,
+      cwd: `${process.cwd()}/frontend/${config.env}`,
       // ignore hidden files
       ignored: /^\./,
     });
@@ -37,16 +37,21 @@ function homePage(config) {
   });
 
   return (ctx, next) => {
+    // we only deal with GET requests here
+    if(ctx.method !== `GET`) {
+      return next();
+    }
+
     const fs = require(`fs`);
     const mime = require(`mime`);
 
     if(ctx.path === `/` || ctx.path === `/index.html`) {
       ctx.type = `html`;
-      ctx.body = fs.readFileSync(`${__dirname}/${config.env}/index.html`, `utf-8`);
+      ctx.body = fs.readFileSync(`${process.cwd()}/frontend/${config.env}/index.html`, `utf-8`);
     }
     else {
       ctx.type = mime.lookup(ctx.path);
-      ctx.body = fs.readFileSync(`${__dirname}/${config.env}/${ctx.path}`, `utf-8`);
+      ctx.body = fs.readFileSync(`${process.cwd()}/frontend/${config.env}/${ctx.path}`, `utf-8`);
     }
 
     return next();
