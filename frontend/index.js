@@ -6,6 +6,7 @@ import {readFileSync} from 'fs';
 import mime from 'mime';
 import bundler from '../webpack.client.config';
 import {socket, options} from '../config';
+import {green} from 'chalk';
 
 export default homePage;
 
@@ -23,6 +24,8 @@ function homePage() {
       // whenever a hot-update file gets created, emit a hot-update event to all
       // sockets connected to this page
       hotUpdWatch.on(`add`, () => {
+        console.log(green(`File changed`))
+
         io.emit(`hot-update`);
       });
     });
