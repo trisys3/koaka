@@ -1,67 +1,20 @@
 'use strict';
 
-const webpack = require(`webpack`);
+import IndexHtml from 'html-webpack-plugin';
+import {HotModuleReplacementPlugin as HMR} from 'webpack';
+import autoprefixer from 'autoprefixer';
+import postcssReporter from 'postcss-reporter';
+import {lint, minify, options} from './config';
 
-const autoprefixer = require(`autoprefixer`);
-const postcssReporter = require(`postcss-reporter`);
-const HMR = webpack.HotModuleReplacementPlugin;
-
-// linting options
-const lint = exports.lint = {
-  js: {
-
-  },
-  css: {
-
-  },
-  html: {
-    'href-style': true,
-  },
-};
-
-// minification options
-const minify = {};
-
-minify.urls = {
-  // this option from the library has an underscore
-  /* eslint camelcase: 0 */
-  ignore_www: true,
-};
-minify.js = {
-
-};
-minify.css = {
-
-};
-minify.html = {
-  removeComments: true,
-  removeCommentsFromCDATA: true,
-  removeCDATASectionsFromCDATA: true,
-  collapseWhitespace: true,
-  conservativeCollapse: true,
-  collapseBooleanAttributes: true,
-  removeAttributeQuotes: true,
-  removeRedundantAttributes: true,
-  useShortDoctype: true,
-  removeEmptyAttributes: true,
-  removeScriptTypeAttributes: true,
-  removeStyleLinkTypeAttributes: true,
-  removeOptionalTags: true,
-  // lint: lint.html,
-  minifyJS: minify.js,
-  minifyCSS: minify.css,
-  minifyURLs: minify.urls,
-};
-
-exports.minify = minify;
-
-const config = {
+export default {
   entry: {
-    app: `${__dirname}/app.js`,
+    app: `${process.cwd()}/frontend/app.js`,
   },
   output: {
     filename: `[name].[hash].js`,
     chunkFilename: `[name].[hash].[chunkhash].js`,
+    path: `frontend/${options.env}`,
+    pathinfo: options.env === `development`,
   },
   module: {
     preLoaders: [
@@ -111,7 +64,7 @@ const config = {
       },
     ],
     resolve: {
-      extensions: [``, `.js`, `.json`, `.styl`],
+      extensions: [``, `.js`, `.json`],
     },
   },
   postcss() {
@@ -126,7 +79,10 @@ const config = {
   devtool: `source-map`,
   plugins: [
     new HMR(),
+    new IndexHtml({
+      template: `${process.cwd()}/frontend/index.html`,
+      inject: true,
+      minify: minify.html,
+    }),
   ],
 };
-
-Object.assign(exports, config);

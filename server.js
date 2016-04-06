@@ -1,53 +1,71 @@
 'use strict';
 
 // third-party components
-const chalk = require(`chalk`);
-const Koa = require(`koa`);
-const logger = require(`koa-json-logger`);
-const compress = require(`koa-compressor`);
-const helmet = require(`koa-helmet`);
-const http = require(`http`);
-const convert = require(`koa-convert`);
+import {green, gray, magenta, cyan, red} from 'chalk';
+import Koa from 'koa';
+import logger from 'koa-json-logger';
+import compress from 'koa-compressor';
+import helmet from 'koa-helmet';
+import {createServer} from 'http';
+import convert from 'koa-convert';
 
 // first-party components
-const config = require(`./config`);
+import {socket, options} from './config';
+// import {csp} from './config';
+import bundler from './webpack.client.config';
 
 // our main koa & SocketIO servers
-const server = module.exports = new Koa();
+export const server = new Koa();
 
 // get the routes
-const allRoutes = require(`./routes`)(config);
+import routes from './routes';
+const allRoutes = routes(options, bundler);
 
 // give the server a name
-server.name = config.name;
+server.name = options.name;
 
 // set the phase of development for the app
-server.env = config.env;
-
-// log some general information about the application
-console.log(chalk.green(`Environment: ${config.env}`));
-console.log(chalk.green(`Hostname(s): ${config.hostname}`));
-console.log(chalk.green(`Port: ${config.port}`));
-console.log(chalk.green(`Application ${config.name} started at ${new Date()}`));
+server.env = options.env;
 
 // compression middleware
 server.use(convert(compress()));
 
 // our JSONAPI logger
 server.use(convert(logger({
-  name: config.name,
+  name: options.name,
   path: `logs/koa-logger`,
 })));
 
 // add certain headers for protection
 server.use(convert(helmet()));
-// server.use(convert(helmet.csp(config.csp)));
+// server.use(convert(helmet.csp(csp)));
 
 server.use(allRoutes);
 
 // create a NodeJS server with the content of our koa application
-const app = http.createServer(server.callback());
+const app = createServer(server.callback());
 
-// have all server components listen
-app.listen(config.port);
-config.socket.listen(app);
+export {serve, stop};
+
+if(process.argv[1] === __filename) {
+  // if we are the called file, start the server
+  serve();
+}
+
+function serve() {
+  // log some general information about the application
+  console.log(green(`Application ${cyan(options.name)}, port ${gray(options.port)} started at ${red(new Date())}`));
+  console.log(green(`Environment: ${magenta(options.env)}`));
+  console.log(green(`Hostname(s): ${cyan(options.hostname)}`));
+
+  // have all server components listen
+  app.listen(options.port);
+  socket.listen(app);
+}
+
+function stop() {
+  console.log(green(`Application ${cyan(options.name)}, port ${gray(options.port)} stopped at ${red(new Date())}`));
+
+  app.close();
+  socket.close();
+}

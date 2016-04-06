@@ -1,9 +1,10 @@
 'use strict';
 
-module.exports = findRoutes;
+export default findRoutes;
+import frontend from './frontend';
 
-function findRoutes(config) {
-  const root = require(`./frontend/`)(config);
+function findRoutes() {
+  const root = frontend();
 
   return (ctx, next) => root(ctx, next);
 }

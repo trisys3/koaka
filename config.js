@@ -3,7 +3,7 @@
 let yargs = require(`yargs`);
 const stripJsonComments = require(`strip-json-comments`);
 const Sockets = require(`socket.io`);
-const fs = require(`fs`);
+const readFileSync = require(`fs`).readFileSync;
 
 // global argument configuration
 yargs = yargs
@@ -13,7 +13,7 @@ yargs = yargs
       config: true,
       configParser: configPath => {
         try {
-          return JSON.parse(stripJsonComments(fs.readFileSync(configPath, `utf8`)));
+          return JSON.parse(stripJsonComments(readFileSync(configPath, `utf8`)));
         }
         catch(e) {
           // the file probably just does not exist, which is perfectly fine
@@ -99,11 +99,54 @@ yargs = yargs
     },
   });
 
-Object.assign(exports, yargs.argv);
+exports.options = yargs.argv;
+
+const lint = {};
+const minify = {};
+
+lint.js = {
+
+};
+lint.css = {
+
+};
+lint.html = {
+  'href-style': true,
+};
+
+minify.urls = {
+  /* eslint camelcase: 0 */
+  ignore_www: true,
+};
+minify.js = {
+
+};
+minify.css = {
+
+};
+minify.html = {
+  removeComments: true,
+  removeCommentsFromCDATA: true,
+  removeCDATASectionsFromCDATA: true,
+  collapseWhitespace: true,
+  conservativeCollapse: true,
+  collapseBooleanAttributes: true,
+  removeAttributeQuotes: true,
+  removeRedundantAttributes: true,
+  useShortDoctype: true,
+  removeEmptyAttributes: true,
+  removeScriptTypeAttributes: true,
+  removeStyleLinkTypeAttributes: true,
+  removeOptionalTags: true,
+  // lint: lint.html,
+  minifyJS: minify.js,
+  minifyCSS: minify.css,
+  minifyURLs: minify.urls,
+};
 
 // basic application information
 // get the webpack configuration
-exports.webpack = require(`./webpack.client.config`);
+Object.assign(exports, {minify, lint});
 
 // Content-Security-Policy configuration
 exports.csp = {
