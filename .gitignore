@@ -1,6 +1,4 @@
-# Logs (we only ignore the contents of the log directory because some
-# applications expect it to be there before they start logging)
-log/*
+# Logs (we also ignore some log files in the 'logs' folder)
 *.log
 
 # Runtime data
