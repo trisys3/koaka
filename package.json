@@ -12,7 +12,7 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "start": "./webpack.server.config.js"
+    "start": "node webpack.server.config.js"
   },
   "author": {
     "name": "Sean Moran",
