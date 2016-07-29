@@ -13,13 +13,13 @@
     "transform-react-jsx",
 
     // ES7 Stage 3
+    "transform-async-to-generator",
     "transform-exponentiation-operator",
 
     // ES7 Stage 2
     "transform-object-rest-spread",
 
     // ES7 Stage 1
-    "transform-class-constructor-call",
     "transform-class-properties",
     "transform-export-extensions",
 

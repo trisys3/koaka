@@ -33,7 +33,7 @@ server.use(convert(compress()));
 // our JSONAPI logger
 server.use(convert(logger({
   name: options.name,
-  path: `logs/koa-logger`,
+  path: 'logs/koa-logger',
 })));
 
 // add certain headers for protection

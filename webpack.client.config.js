@@ -11,16 +11,16 @@ export default {
     app: `${process.cwd()}/frontend/app.js`,
   },
   output: {
-    filename: `[name].[hash].js`,
-    chunkFilename: `[name].[hash].[chunkhash].js`,
+    filename: '[name].[hash].js',
+    chunkFilename: '[name].[hash].[chunkhash].js',
     path: `frontend/${options.env}`,
-    pathinfo: options.env === `development`,
+    pathinfo: options.env === 'development',
   },
   module: {
     preLoaders: [
       {
         test: /\.png$|\.jpg$|\.gif$/,
-        loader: `img`,
+        loader: 'img',
         query: {
           minimize: true,
         },
@@ -30,7 +30,7 @@ export default {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: `babel`,
+        loader: 'babel',
         query: {
           cacheDirectory: true,
         },
@@ -38,33 +38,33 @@ export default {
       {
         test: /\.styl$/,
         loaders: [
-          `style`,
-          `css?sourceMap`,
-          `postcss`,
-          `stylus?sourceMap`,
+          'style',
+          'css?sourceMap',
+          'postcss',
+          'stylus?sourceMap',
         ],
       },
       {
         test: /\.png$|\.jpg$|\.gif$/,
-        loader: `url`,
+        loader: 'url',
         query: {
-          name: `[sha512:hash].[ext]`,
+          name: '[sha512:hash].[ext]',
         },
       },
       {
         test: /\.json$/,
-        loader: `json`,
+        loader: 'json',
       },
       {
         test: /\.html$/,
-        loader: `html`,
+        loader: 'html',
         query: {
           minimize: lint.html,
         },
       },
     ],
     resolve: {
-      extensions: [``, `.js`, `.json`],
+      extensions: ['', '.js', '.json'],
     },
   },
   postcss() {
@@ -76,7 +76,7 @@ export default {
     ];
   },
   watch: true,
-  devtool: `source-map`,
+  devtool: 'source-map',
   plugins: [
     new HMR(),
     new IndexHtml({

@@ -2,15 +2,16 @@
 
 'use strict';
 
-const red = require(`chalk`).red;
-const path = require(`path`);
+const red = require('chalk').red;
+const path = require('path');
 const pkg = require(`${process.cwd()}/package.json`);
-const webpack = require(`webpack`);
-const options = require(`./config`).options;
+const webpack = require('webpack');
+const options = require('./config').options;
 
+const deps = Object.assign({}, pkg.dependencies, pkg.devDependencies);
 const nodeModules = {};
 
-for(const dep in pkg.dependencies) {
+for(const dep in deps) {
   nodeModules[dep] = `commonjs ${dep}`;
 }
 
@@ -19,47 +20,38 @@ const config = {
     index: `${__dirname}/server.js`,
   },
   output: {
-    filename: `[name].[hash].js`,
-    chunkFilename: `[name].[hash].[chunkhash].js`,
+    filename: '[name].[hash].js',
+    chunkFilename: '[name].[hash].[chunkhash].js',
     path: `${process.cwd()}/dist`,
-    pathinfo: options.env === `development`,
-    libraryTarget: `commonjs2`,
+    pathinfo: options.env === 'development',
+    libraryTarget: 'commonjs2',
   },
   module: {
-    loaders: [
-      {
-        test: /\.node$/,
-        loader: `node`,
+    loaders: [{
+      test: /\.node$/,
+      loader: 'node',
+    }, {
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loader: 'babel',
+      query: {
+        cacheDirectory: true,
       },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: `babel`,
-        query: {
-          cacheDirectory: true,
-        },
-      },
-      {
-        test: /\.json$/,
-        loader: `json`,
-      },
-      {
-        test: /\.coffee$/,
-        loader: `coffee`,
-      },
-    ],
+    }, {
+      test: /\.json$/,
+      loader: 'json',
+    }],
     resolve: {
-      extensions: [``, `.js`, `.json`],
+      extensions: ['', '.js', '.json'],
     },
   },
-  target: `node`,
+  target: 'node',
   externals: nodeModules,
   plugins: [
-    new webpack.BannerPlugin(`require('source-map-support').install();`,
-      {
-        raw: true,
-        entryOnly: false,
-      }),
+    new webpack.BannerPlugin('require("source-map-support").install();', {
+      raw: true,
+      entryOnly: false,
+    }),
   ],
   node: {
     global: false,
@@ -70,7 +62,7 @@ const config = {
     setImmediate: false,
   },
   watch: true,
-  devtool: `source-map`,
+  devtool: 'source-map',
 };
 
 Object.assign(exports, config);
@@ -87,9 +79,9 @@ if(process.argv[1] === __filename) {
         return;
       }
 
-      if(assets.filter(allEntries => path.extname(allEntries) === `.js`).length) {
+      if(assets.filter(allEntries => path.extname(allEntries) === '.js').length) {
         servers = assets.map(asset => `${outputFolder}/${asset}`)
-          .filter(allEntries => path.extname(allEntries) === `.js`)
+          .filter(allEntries => path.extname(allEntries) === '.js')
           .map((entry, entryIndex) => {
             const newServer = require(entry);
 
@@ -107,7 +99,7 @@ if(process.argv[1] === __filename) {
           });
       }
       else {
-        console.log(red(`No usable assets found. Either you did not specify any entry points in JavaScript or compilable to JavaScript, or you have an error in your entry point(s).`));
+        console.log(red('No usable assets found. Either you did not specify any entry points in JavaScript or compilable to JavaScript, or you have an error in your entry point(s).'));
       }
     });
 }

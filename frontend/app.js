@@ -6,7 +6,7 @@ import './app.styl';
 
 if(module.hot) {
   module.hot.accept();
-  socket.on(`hot-update`, () => {
+  socket.on('hot-update', () => {
     module.hot.check((err, mods) => {
       if(mods) {
         module.hot.apply();

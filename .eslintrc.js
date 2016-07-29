@@ -1,25 +1,30 @@
 'use strict';
 
-// EcmaScript 6
+// EcmaScript 6/7
 exports.parserOptions = {
   ecmaVersion: 7,
   sourceType: 'module',
   ecmaFeatures: {
     jsx: true,
-    experimentalObjectRestSpread: true
-  }
+    experimentalObjectRestSpread: true,
+  },
 };
+
+exports.plugins = [
+  'babel',
+];
+
 // environments
 exports.env = {
   es6: true,
   node: true,
 };
+
 // individual rules
 exports.rules = {
   // possible errors
   'comma-dangle': [2, 'always-multiline'],
   'no-constant-condition': 2,
-  'no-debugger': 2,
   'no-dupe-args': 2,
   'no-duplicate-case': 2,
   'no-empty': 2,
@@ -74,7 +79,7 @@ exports.rules = {
   'no-void': 2,
   'no-with': 2,
   'wrap-iife': [2, 'inside'],
-  'yoda': [2, 'never', {
+  yoda: [2, 'never', {
     exceptRange: true,
   }],
 
@@ -88,11 +93,11 @@ exports.rules = {
   'array-bracket-spacing': 2,
   'block-spacing': [2, 'never'],
   'brace-style': [2, 'stroustrup'],
-  'camelcase': 2,
+  camelcase: 2,
   'comma-style': 2,
   'computed-property-spacing': [2, 'never'],
   'func-names': 2,
-  'indent': [2, 2, {
+  indent: [2, 2, {
     SwitchCase: 1,
   }],
   'jsx-quotes': 2,
@@ -138,7 +143,7 @@ exports.rules = {
   'operator-linebreak': 2,
   'padded-blocks': [2, 'never'],
   'quote-props': [2, 'as-needed'],
-  quotes: [2, 'backtick', 'avoid-escape'],
+  quotes: [2, 'single', {avoidEscape: true}],
   semi: 2,
   'semi-spacing': 2,
   'space-before-blocks': [2, 'always'],
@@ -149,7 +154,7 @@ exports.rules = {
   'spaced-comment': [2, 'always'],
   'wrap-regex': 2,
 
-  // ECMAScript 6
+  // ECMAScript 6/7
   'arrow-body-style': 2,
   'arrow-parens': [2, 'as-needed'],
   'constructor-super': 2,
