@@ -1,9 +1,8 @@
-'use strict';
+import serve from 'koa-static';
+import mount from 'koa-mount';
 
 import webpack from 'webpack';
 import {watch} from 'chokidar';
-import {readFileSync} from 'fs';
-import mime from 'mime';
 import bundler from '../webpack.client.config';
 import {socket, options} from '../config';
 import {green} from 'chalk';
@@ -31,21 +30,9 @@ function homePage() {
     });
   });
 
-  return (ctx, next) => {
-    // we only deal with GET requests here
-    if(ctx.method !== 'GET') {
-      return next();
-    }
+  const Koa = require('koa');
+  const app = new Koa();
 
-    if(ctx.path === '/' || ctx.path === '/index.html') {
-      ctx.type = 'html';
-      ctx.body = readFileSync(`${process.cwd()}/frontend/${options.env}/index.html`, 'utf-8');
-    }
-    else {
-      ctx.type = mime.lookup(ctx.path);
-      ctx.body = readFileSync(`${process.cwd()}/frontend/${options.env}/${ctx.path}`, 'utf-8');
-    }
-
-    return next();
-  };
+  app.use(serve(`${process.cwd()}/frontend/${options.env}/`));
+  return mount('/', app);
 }
