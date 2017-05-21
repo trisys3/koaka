@@ -69,7 +69,6 @@ Object.assign(exports, config);
 
 if(process.argv[1] === __filename) {
   let servers = [];
-
   webpack(config)
     .watch({}, (err, stats) => {
       const assets = Object.keys(stats.compilation.assets);
